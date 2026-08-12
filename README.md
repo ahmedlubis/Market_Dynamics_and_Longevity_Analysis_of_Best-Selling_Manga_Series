@@ -89,27 +89,3 @@ The data reveals two distinct commercial models:
 * **Demographic Investment:** *Shōnen* remains the most commercially scalable demographic for global market penetration and cross-media adaptations.
 
 ---
-
-## 💻 Tech Stack & Environment
-
-* **Language:** Python 3.x
-* **Web Scraping:** `requests`, `beautifulsoup4`
-* **Data Processing & Manipulation:** `pandas`, `re` (Regular Expressions)
-* **Data Visualization:** `matplotlib`, `seaborn`
-
----
-
-## 📝 Script Usage
-
-To run the full data collection, cleaning, and visualization pipeline, execute the main analysis script:
-
-```bash
-# Clone the repository
-git clone [https://github.com/your-username/manga-sales-analysis.git](https://github.com/your-username/manga-sales-analysis.git)
-cd manga-sales-analysis
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the pipeline
-python main.py
