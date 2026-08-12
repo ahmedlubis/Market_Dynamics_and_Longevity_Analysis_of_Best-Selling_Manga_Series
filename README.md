@@ -50,6 +50,23 @@ Data was extracted using custom web scraping pipelines targeting compiled *tank�
 
 ---
 
+## 🔬 Analysis Methodologies Used
+
+This project applies specific exploratory data analysis (EDA), feature engineering, and visualization techniques:
+
+1. **Data Cleaning & Regex Extraction:** Standardizes unstructured scraping noise (removing Wikipedia citations like `[1]`, symbols `†`, `‡`, and characters like `+` or `,`) to convert raw text into clean numerical values.
+2. **Feature Engineering (Sales Velocity Metric):** Introduces a derived metric to measure performance efficiency:
+   $$\text{Sales Per Volume} = \frac{\text{Sales (in Millions)}}{\text{Volumes Count}}$$
+   *This metric isolates high-velocity hits from long-running legacy titles.*
+3. **Categorical & Frequency Aggregation:** Analyzes demographic market shares (`value_counts()`) and filters top performers (`sort_values()`).
+4. **Visual Analytics:**
+   * **Bar Charts:** Evaluates top absolute sales.
+   * **Pie Charts:** Visualizes demographic distributions.
+   * **Scatter Plots (with size encoding):** Correlates serial duration (volumes) against commercial yield (sales).
+   * **Horizontal Efficiency Charts:** Identifies titles with the highest sales density per volume.
+
+---
+
 ## 🔍 Key Insights & Analysis
 
 ### 1. Publisher Dominance (Shueisha's Monopolistic Grip)
@@ -62,6 +79,14 @@ Over **70%** of manga titles achieving $>100\text{ million}$ global sales belong
 The data reveals two distinct commercial models:
 * **The Legacy Model (Longevity):** Franchises like *One Piece*, *Golgo 13*, and *KochiKame* build massive cumulative totals across decades and hundreds of volumes ($100\text{--}200+$ volumes).
 * **The Modern Velocity Model (High Efficiency):** Newer titles leverage instantaneous global streaming anime adaptations to drive unprecedented backlog print sales. For example, **Demon Slayer** generated **220 million sales in just 23 volumes**, yielding an extraordinary velocity of **$\sim 9.56\text{ million}$ sales per volume**.
+
+---
+
+## 💡 Conclusion
+
+* **Shift in Industry Dynamics:** Modern manga success relies less on 20-year serializations and more on high-velocity explosive growth driven by anime/streaming multimedia synergy.
+* **Metric Importance:** Evaluating sales on a *per-volume* basis yields a more accurate reflection of modern popularity and market efficiency than total raw sales alone.
+* **Demographic Investment:** *Shōnen* remains the most commercially scalable demographic for global market penetration and cross-media adaptations.
 
 ---
 
