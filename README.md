@@ -1,91 +1,195 @@
-# 📚 Market Dynamics & Longevity Analysis of Best-Selling Manga
+# 📚 Manga Market Analysis
 
-An end-to-end data analysis project exploring the global manga market. This project scrapes, cleans, and analyzes sales data of the world's highest-grossing manga series to uncover trends in demographics, publisher market share, and sales efficiency.
+An exploratory data analysis project examining **manga sales, publisher market share, demographics, and sales efficiency** using data on best-selling manga series.
 
----
+## 🎯 Problem
 
-## 📌 Project Overview & Objectives
+What distinguishes the world's best-selling manga series?
 
-The primary objective of this project is to quantitatively evaluate what drives commercial success in the manga industry. By extracting publicly available records (such as Wikipedia's best-selling manga database), this analysis answers key industry questions:
+This project explores several questions:
 
-* **Top-Tier Performance:** Which manga series hold the highest global sales of all time?
-* **Volume Efficiency vs. Longevity:** Does a higher volume count guarantee higher sales, or do modern series achieve higher sales velocity per volume?
-* **Publisher Dominance:** Which Japanese publishers (*Shueisha*, *Shogakukan*, *Kodansha*) control the largest market share?
-* **Demographic Audience:** How are sales distributed across target demographics (*Shōnen*, *Seinen*, *Shōjo*, *Children*)?
+* Which manga series have the highest cumulative sales?
+* Does a larger number of volumes necessarily mean higher sales?
+* Which publishers dominate the best-selling manga market?
+* Which demographics are most represented among high-selling titles?
+* Which manga series have the highest sales efficiency per volume?
 
----
+## 📊 Dataset
 
-## 📊 Dataset Description
+The dataset was compiled from publicly available records of **best-selling manga series**, including titles with approximately **50 million or more estimated sales**.
 
-Data was extracted using custom web scraping pipelines targeting compiled *tankōbon* sales figures worldwide (series with $\ge 50$ million estimated sales).
+The data were collected through web scraping and subsequently cleaned and transformed for analysis.
 
-### Feature Dictionary
+### Main Variables
 
-| Feature | Type | Description |
-| :--- | :--- | :--- |
-| `Title` | String | Official title of the manga series. |
-| `Author` | String | Creator(s) / Illustrator(s) of the series. |
-| `Publisher` | String | Original Japanese publishing house. |
-| `Demographic` | Categorical | Primary target audience (*Shōnen*, *Seinen*, *Shōjo*, etc.). |
-| `Volumes` | Integer | Total number of compiled physical volumes. |
-| `Sales_Millions` | Float | Estimated global sales/circulation in millions of copies. |
-| `Sales_Per_Volume` | Float | **Derived Metric:** Average sales per single published volume. |
+| Variable           | Description                           |
+| ------------------ | ------------------------------------- |
+| `Title`            | Manga series title                    |
+| `Author`           | Creator / illustrator                 |
+| `Publisher`        | Original Japanese publisher           |
+| `Demographic`      | Primary target audience               |
+| `Volumes`          | Number of compiled volumes            |
+| `Sales_Millions`   | Estimated sales in millions of copies |
+| `Sales_Per_Volume` | Estimated sales per published volume  |
 
----
+## 🔬 Method
 
-## 📈 Sample Benchmark (Top 10 Rankings)
+The analysis uses **Python-based exploratory data analysis and feature engineering**.
 
-| Rank | Manga Title | Publisher | Demographic | Volumes | Total Sales (M) | Sales / Volume (M) |
-| :---: | :--- | :--- | :--- | :---: | :---: | :---: |
-| **1** | *One Piece* | Shueisha | Shōnen | 108+ | 600 | 5.55 |
-| **2** | *Doraemon* | Shogakukan | Children | 45 | 300 | 6.67 |
-| **3** | *Golgo 13* | Shogakukan | Seinen | 200+ | 300 | 1.50 |
-| **4** | *Case Closed / Detective Conan* | Shogakukan | Shōnen | 105+ | 270 | 2.57 |
-| **5** | *Dragon Ball* | Shueisha | Shōnen | 42 | 260 | 6.19 |
-| **6** | *Naruto* | Shueisha | Shōnen | 72 | 250 | 3.47 |
-| **7** | *Demon Slayer: Kimetsu no Yaiba*| Shueisha | Shōnen | 23 | 220 | **9.56** |
-| **8** | *Slam Dunk* | Shueisha | Shōnen | 31 | 185 | 5.97 |
-| **9** | *KochiKame* | Shueisha | Shōnen | 201 | 157 | 0.78 |
-| **10**| *Jujutsu Kaisen* | Shueisha | Shōnen | 30 | 150 | 5.00 |
+### 1. Data Cleaning
 
----
+Raw scraped data were cleaned by:
 
-## 🔬 Analysis Methodologies Used
+* Removing citation markers
+* Removing symbols and formatting characters
+* Standardizing numeric values
+* Converting sales and volume fields into numeric variables
+* Handling values containing `+` and thousands separators
 
-This project applies specific exploratory data analysis (EDA), feature engineering, and visualization techniques:
+### 2. Feature Engineering
 
-1. **Data Cleaning & Regex Extraction:** Standardizes unstructured scraping noise (removing Wikipedia citations like `[1]`, symbols `†`, `‡`, and characters like `+` or `,`) to convert raw text into clean numerical values.
-2. **Feature Engineering (Sales Velocity Metric):** Introduces a derived metric to measure performance efficiency:
-   $$\text{Sales Per Volume} = \frac{\text{Sales (in Millions)}}{\text{Volumes Count}}$$
-   *This metric isolates high-velocity hits from long-running legacy titles.*
-3. **Categorical & Frequency Aggregation:** Analyzes demographic market shares (`value_counts()`) and filters top performers (`sort_values()`).
-4. **Visual Analytics:**
-   * **Bar Charts:** Evaluates top absolute sales.
-   * **Pie Charts:** Visualizes demographic distributions.
-   * **Scatter Plots (with size encoding):** Correlates serial duration (volumes) against commercial yield (sales).
-   * **Horizontal Efficiency Charts:** Identifies titles with the highest sales density per volume.
+A **Sales Per Volume** metric was created:
 
----
+**Sales Per Volume = Total Sales ÷ Number of Volumes**
 
-## 🔍 Key Insights & Analysis
+This provides a simple measure of sales efficiency and helps distinguish:
 
-### 1. Publisher Dominance (Shueisha's Monopolistic Grip)
-**Shueisha** dominates the top-selling tiers, largely propelled by its flagship publication, *Weekly Shōnen Jump*. **Shogakukan** and **Kodansha** capture secondary market shares through long-running legacy franchises.
+* Long-running franchises with large cumulative sales
+* Shorter series with unusually high sales relative to their number of volumes
 
-### 2. Shōnen as the Primary Economic Engine
-Over **70%** of manga titles achieving $>100\text{ million}$ global sales belong to the **Shōnen** demographic. While **Seinen** holds strong secondary positions through cult-classic long-runners (*Golgo 13*, *Kingdom*), Shōnen's broad multi-generational appeal generates the highest revenue.
+### 3. Exploratory Analysis
 
-### 3. The Shift in Success Models: Longevity vs. High Velocity
-The data reveals two distinct commercial models:
-* **The Legacy Model (Longevity):** Franchises like *One Piece*, *Golgo 13*, and *KochiKame* build massive cumulative totals across decades and hundreds of volumes ($100\text{--}200+$ volumes).
-* **The Modern Velocity Model (High Efficiency):** Newer titles leverage instantaneous global streaming anime adaptations to drive unprecedented backlog print sales. For example, **Demon Slayer** generated **220 million sales in just 23 volumes**, yielding an extraordinary velocity of **$\sim 9.56\text{ million}$ sales per volume**.
+The analysis examines:
 
----
+* Top-selling manga
+* Publisher distribution
+* Demographic distribution
+* Sales versus number of volumes
+* Sales efficiency per volume
+
+### 4. Visualization
+
+Several visualization techniques are used:
+
+* Bar charts
+* Horizontal ranking charts
+* Pie charts
+* Scatter plots
+* Comparative efficiency charts
+
+## 📈 Results
+
+### 1. Top-Selling Manga
+
+Among the highest-selling titles in the dataset:
+
+| Rank | Manga        | Publisher  | Demographic | Volumes | Sales (M) |
+| ---: | ------------ | ---------- | ----------- | ------: | --------: |
+|    1 | One Piece    | Shueisha   | Shōnen      |    108+ |       600 |
+|    2 | Doraemon     | Shogakukan | Children    |      45 |       300 |
+|    3 | Golgo 13     | Shogakukan | Seinen      |    200+ |       300 |
+|    4 | Case Closed  | Shogakukan | Shōnen      |    105+ |       270 |
+|    5 | Dragon Ball  | Shueisha   | Shōnen      |      42 |       260 |
+|    6 | Naruto       | Shueisha   | Shōnen      |      72 |       250 |
+|    7 | Demon Slayer | Shueisha   | Shōnen      |      23 |       220 |
+
+The rankings illustrate that high cumulative sales can be achieved through very different publishing strategies.
+
+### 2. Longevity vs. Sales Efficiency
+
+The analysis reveals two broad patterns.
+
+**Long-running franchises**
+
+Series such as *One Piece*, *Golgo 13*, and *KochiKame* accumulate very large total sales over many volumes and years of publication.
+
+**High-efficiency series**
+
+Some newer or shorter series achieve unusually high sales relative to their number of volumes.
+
+For example, **Demon Slayer** has approximately 220 million sales across 23 volumes, producing an estimated **9.56 million sales per volume**.
+
+This demonstrates why total sales alone can provide an incomplete picture of commercial performance.
+
+### 3. Publisher Distribution
+
+**Shueisha** has a particularly strong presence among the highest-selling titles, supported by major franchises such as:
+
+* One Piece
+* Dragon Ball
+* Naruto
+* Demon Slayer
+* Slam Dunk
+
+Shogakukan and Kodansha also have substantial representation through long-running and highly successful franchises.
+
+### 4. Demographic Distribution
+
+The **Shōnen** demographic represents the largest share among the high-selling titles in the analyzed sample.
+
+This suggests that Shōnen manga has a particularly strong presence among globally successful commercial franchises.
+
+However, the analysis describes the composition of this sample rather than establishing that demographic category itself causes higher sales.
+
+## 📊 Visualization
+
+### Sales vs. Number of Volumes
+
+A scatter plot compares the number of published volumes with total manga sales.
+
+### Sales Efficiency
+
+The `Sales_Per_Volume` metric provides another perspective by comparing cumulative sales with the number of volumes published.
+
+This helps identify titles that achieved high sales without requiring extremely long publication histories.
 
 ## 💡 Conclusion
 
-* **Shift in Industry Dynamics:** Modern manga success relies less on 20-year serializations and more on high-velocity explosive growth driven by anime/streaming multimedia synergy.
-* **Metric Importance:** Evaluating sales on a *per-volume* basis yields a more accurate reflection of modern popularity and market efficiency than total raw sales alone.
-* **Demographic Investment:** *Shōnen* remains the most commercially scalable demographic for global market penetration and cross-media adaptations.
+The analysis highlights several patterns in the commercial performance of best-selling manga.
 
----
+### Key takeaways
+
+**1. Cumulative sales and sales efficiency are different measures.**
+
+Long-running manga can accumulate enormous total sales through hundreds of volumes, while shorter series can achieve very high sales per volume.
+
+**2. Longevity is one path to commercial success, but not the only one.**
+
+The dataset contains both legacy franchises with extensive publication histories and newer titles with high sales efficiency.
+
+**3. Shueisha has a strong presence among top-selling manga.**
+
+Major Shueisha franchises account for a substantial portion of the highest-selling titles in the analyzed sample.
+
+**4. Shōnen dominates the high-selling sample.**
+
+The demographic is heavily represented among titles with very large cumulative sales.
+
+Overall, the project demonstrates how **feature engineering and exploratory data analysis can reveal different dimensions of commercial performance** that are not visible from total sales alone.
+
+> **Note:** The analysis is descriptive. Sales estimates, publication counts, and publicly available metadata do not provide sufficient evidence to establish causal relationships between publisher, demographic, anime adaptation, or other factors and commercial success.
+
+## 🛠️ Technologies
+
+* **Python**
+* **Pandas** — data manipulation
+* **NumPy** — numerical computation
+* **Matplotlib** — visualization
+* **Seaborn** — statistical visualization
+* **Jupyter Notebook** — analysis
+* **Web Scraping** — data collection
+* **Regular Expressions** — data cleaning
+* **Feature Engineering** — sales efficiency metrics
+
+## 📁 Repository Structure
+
+```text
+manga-market-analysis/
+│
+├── manga-market-analysis.ipynb
+└── README.md
+```
+
+## 📌 Topics
+
+`Python` `Data Analysis` `Exploratory Data Analysis` `Feature Engineering` `Web Scraping` `Data Visualization` `Manga` `Market Analysis` `Business Analytics`
